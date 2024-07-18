@@ -14,7 +14,6 @@ CANAL_ID = 1263506375103742042
 
 aura_points = {}
 
-
 @bot.event
 async def on_ready():
     print(f'{bot.user} ha iniciado sesión en Discord!')
@@ -42,8 +41,6 @@ async def on_ready():
         print(f"No se pudo encontrar el canal con ID {CANAL_ID}")
     
     print("Finalizado on_ready")
-
-
 
 @bot.tree.command(name="ver_aura")
 async def ver_aura(interaction: discord.Interaction):
