@@ -86,7 +86,15 @@ async def restar_aura(interaction: discord.Interaction, usuario: discord.Member 
     aura_points[target_user.id] = current_points - cantidad
     await interaction.response.send_message(f"Se le resto {cantidad} de aura a {target_user.mention}. Ahora tiene {aura_points[target_user.id]}.")
 
-
+@bot.tree.command(name="reset_aura")
+@app_commands.describe(
+    cantidad="La cantidad de aura a la que se reseteará (deja en blanco para resetear a 0)"
+)
+async def reset_aura(interaction: discord.Interaction, cantidad: int = 0):
+    """Resetear el aura de todos los usuarios a 0 o a la cantidad especificada."""
+    global aura_points
+    aura_points = {user_id: cantidad for user_id in aura_points}
+    await interaction.response.send_message(f"El aura de todos los usuarios ha sido reseteada a {cantidad}.")
 
 @bot.tree.command(name="chichi")
 async def chichi(interaction: discord.Interaction):
