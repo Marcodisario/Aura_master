@@ -97,7 +97,6 @@ async def reset_aura(interaction: discord.Interaction, cantidad: int = 0):
 async def chichi(interaction: discord.Interaction):
     await interaction.response.send_message(f'sisi, {interaction.user.mention},chichi es una rata!')
 
-
 @bot.command()
 async def chau(ctx):
     await ctx.send(f'Adios')
