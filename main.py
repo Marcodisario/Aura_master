@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord import app_commands
 from tabulate import tabulate
 
-# Configura el prefijo qu e usarás para los comandos (por ejemplo, '!')
+# Configura el prefijo que usarás para los comandos (por ejemplo, '!')
 
 
 intents = discord.Intents.default()
