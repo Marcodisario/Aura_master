@@ -2,7 +2,8 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 from tabulate import tabulate
-
+import os
+from dotenv import load_dotenv
 # Configura el prefijo que usarás para los comandos (por ejemplo, '!')
 
 
@@ -11,6 +12,9 @@ intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 CANAL_ID = 1263506375103742042
+
+load_dotenv()
+
 
 aura_points = {}
 
@@ -107,6 +111,7 @@ async def sync(ctx):
     await bot.tree.sync()
     await ctx.send('Command tree synced.')
 
+TOKEN= os.getenv('Token')
 
-
+bot.run(TOKEN)
 # Reemplaza 'TU_TOKEN_AQUI' con el token de tu bot
