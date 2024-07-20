@@ -11,8 +11,6 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-CANAL_ID = 1263506375103742042
-
 load_dotenv()
 
 
@@ -22,29 +20,25 @@ aura_points = {}
 async def on_ready():
     print(f'{bot.user} ha iniciado sesión en Discord!')
     print(f'Bot ID: {bot.user.id}')
-    print(f'Conectado a {len(bot.guilds)} servidores')
-    server = bot.get_guild(1245398305261748326)
-    if server:
-        bot.tree.copy_global_to(guild=server)
+    print(f'Conectado a {len(bot.guilds)} servidor(es)')
+
+    # Sincronizar comandos globalmente
+    try:
+        synced = await bot.tree.sync()
+        print(f"Sincronizado {len(synced)} comando(s) global(es)")
+    except Exception as e:
+        print(f"Error al sincronizar comandos globales: {e}")
+
+    # Opcional: Sincronizar comandos por servidor
+    for guild in bot.guilds:
+        general_channel =discord.utils.find(lambda x:x.name == 'general',guild.text_channels)
+        if general_channel:
+            await general_channel.send('¡Hola a todos! ¡Estoy en línea y listo para contar sus auras')
         try:
-            synced = await bot.tree.sync(guild=server)
-            print(f"Synced {len(synced)} command(s) for server {server.name}")
+            synced = await bot.tree.sync(guild=guild)
+            print(f"Sincronizado {len(synced)} comando(s) en el servidor: {guild.name} (ID: {guild.id})")
         except Exception as e:
-            print(f"Failed to sync commands: {e}")
-    else:
-        print("Could not find the specified server.")
-    
-    canal = bot.get_channel(CANAL_ID)
-    if canal:
-        try:
-            await canal.send(f'¡{bot.user.name} está en línea y listo para usar!')
-            print(f"Mensaje enviado al canal {canal.name}")
-        except Exception as e:
-            print(f"Error al enviar mensaje: {e}")
-    else:
-        print(f"No se pudo encontrar el canal con ID {CANAL_ID}")
-    
-    print("Finalizado on_ready")
+            print(f"Error al sincronizar comandos en el servidor {guild.name} (ID: {guild.id}): {e}")
 
 @bot.tree.command(name="ver_aura")
 async def ver_aura(interaction: discord.Interaction):
